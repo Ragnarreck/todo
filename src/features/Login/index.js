@@ -46,10 +46,12 @@ class Component extends React.Component {
     }));
 
     validate = () => {
-        const { login, password } = this.state;
+        const { login, password, isSignUpPage } = this.state;
+        const loginValidate  = !login && 'Required';
+        const passwordValidate = (!password && 'Required') || (isSignUpPage && password.length < 5 && 'At least 5 letters for password');
         const errors = {
-            login: !login && 'Required',
-            password: !password && 'Required',
+            login: loginValidate,
+            password: passwordValidate
         };
         this.setState(state => ({ ...state, errors }));
         return all(item => !errors[item])(Object.keys(errors));
